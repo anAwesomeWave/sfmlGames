@@ -61,6 +61,22 @@ void isCellAlive(int arrOfCubes[62][62]) {
     }
 }
 
+void drawLines(RenderWindow& window) {
+    for(int i = 10; i < 600; i += 10) {
+        RectangleShape rect1, rect2;
+        rect1.setPosition({i, 0});
+        rect1.setSize({2, 600});
+        rect1.setFillColor({Color::Black});
+
+        rect2.setPosition({0, i});
+        rect2.setSize({600, 2});
+        rect2.setFillColor({Color::Black});
+
+        window.draw(rect1);
+        window.draw(rect2);
+    }
+}
+
 int main() {
     RenderWindow window({600, 600}, "GameOFLife");
     int arrOfcubes[62][62] = {0}; // we will use arr 60x60, but our functions require more
@@ -98,7 +114,10 @@ int main() {
             isCellAlive(arrOfcubes);
             createCube(arrOfcubes);
         }
-        window.clear({175, 175, 175});
+        window.clear({123, 159, 198});
+
+        drawLines(window);
+
         for(int i = 1; i < 61; i ++) {
             for(int j = 1; j < 61; j ++) {
                 if(arrOfcubes[i][j] == 1 || arrOfcubes[i][j] == 2) {
