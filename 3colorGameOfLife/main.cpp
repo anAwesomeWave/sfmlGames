@@ -6,6 +6,7 @@
 using namespace sf;
 
 void createMapOfCells(int arrOfCubes[82][122]) {
+    srand(time(NULL));
     for(int i = 1; i < 81; i ++) {
         for(int j = 1; j < 121; j ++) {
             arrOfCubes[i][j] = rand() % 3 + 1;
