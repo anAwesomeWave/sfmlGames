@@ -2,6 +2,8 @@
 #define SETTINGS_H_INCLUDED
 
 # define TEXTURE "images\\tiles.jpg"
-# define TIME_FONT "gameFont2.ttf"
+# define FONT "gameFont2.ttf"
+
+# define DELAY 1
 
 #endif // SETTINGS_H_INCLUDED

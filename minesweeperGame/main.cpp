@@ -6,6 +6,8 @@
 
 using namespace sf;
 
+void endOfTheGame(RenderWindow& window, bool isWin);
+
 int grid[12][12];
 int sgrid[12][12];
 
@@ -45,13 +47,24 @@ int main()
     Time timer;
     int minuts = 0; int seconds = 0;
     Font font;
-    font.loadFromFile(TIME_FONT);
+    font.loadFromFile(FONT);
     Text timeTxt;
     timeTxt.setFont(font);
     timeTxt.setCharacterSize(16);
     timeTxt.setPosition({235, 0});
 
     newGame();
+    ///CountMines///
+    int numberOfMines = 0;
+    for(int i = 1; i < 11; i ++) {
+        for(int j = 1; j < 11; j ++) {
+            if(grid[i][j] == 9) {
+                numberOfMines ++;
+            }
+        }
+    }
+
+    Time time = sf::seconds(1.f);
 
     Texture t;
     t.loadFromFile(TEXTURE);
@@ -91,11 +104,12 @@ int main()
                 }
             }
         }
-        int gridCounter = 0;
         int sgridCounter = 0;
         for(int i = 1; i <= 10; i ++) {
             for(int j = 1; j <= 10; j ++) {
-                if(sgrid[y][x] == 9) sgrid[i][j] = grid[i][j];
+                if(sgrid[y][x] == 9) {
+                    endOfTheGame(window, false);
+                }
                 if(sgrid[i][j] == 0) {
                     for(int k = i - 1; k < i + 2; k++) {
                         for(int l = j- 1; l < j + 2; l ++) {
@@ -103,10 +117,7 @@ int main()
                         }
                     }
                 }
-                if(grid[i][j] == 9) {
-                    gridCounter ++;
-                }
-                if(sgrid[i][j] == 10) {
+                if(sgrid[i][j] == 10 || sgrid[i][j] == 11) {
                     sgridCounter ++;
                 }
 
@@ -115,9 +126,8 @@ int main()
                 window.draw(s);
             }
         }
-        if(gridCounter == sgridCounter) {
-            std::cout << 1;
-            newGame();
+        if(sgridCounter == numberOfMines) {
+            endOfTheGame(window, true);
         }
         window.draw(timeTxt);
         window.display();
